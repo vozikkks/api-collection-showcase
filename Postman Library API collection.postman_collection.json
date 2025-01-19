@@ -1,0 +1,336 @@
+{
+	"info": {
+		"_postman_id": "f69d7459-d485-4857-bb67-42c3e5f474d6",
+		"name": "Postman Library API collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "13271624",
+		"_collection_link": "https://postman-api-fundamentals-student-expert-8460.postman.co/workspace/f33acbb6-f38b-4b49-83f1-ab531c2ec106/collection/13271624-f69d7459-d485-4857-bb67-42c3e5f474d6?action=share&source=collection_link&creator=13271624"
+	},
+	"item": [
+		{
+			"name": "get books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books?page=1&limit=5",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				},
+				"description": "### Purpose:\n\nFetches a list of all books in the library.\n\n### Parameters:\n\nBase URL: {{baseUrl}}\n\n- `page` (query parameter) - The page number for pagination.\n    \n- `limit` (query parameter) - The maximum number of books to be returned in a single page.\n    \n\n### Expected Response:\n\nStatus Code: 200 OK\n\nResponse Body: A JSON array of book objects.\n\n``` json\n[\n  {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"author\": \"string\",\n    \"genre\": \"string\",\n    \"yearPublished\": 0,\n    \"checkedOut\": true,\n    \"isPermanentCollection\": true,\n    \"createdAt\": \"string\"\n  }\n]\n\n ```\n\n### Example Scenario:\n\nUse this endpoint to get an overview of all books before filtering or performing actions like checkout."
+			},
+			"response": []
+		},
+		{
+			"name": "get fiction books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the response schema for the book object\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.id).to.be.a('string');",
+							"    pm.expect(responseData.title).to.be.a('string');",
+							"    pm.expect(responseData.author).to.be.a('string');",
+							"    pm.expect(responseData.genre).to.be.a('string');",
+							"    pm.expect(responseData.checkedOut).to.be.a('boolean');",
+							"    pm.expect(responseData).to.have.property('id');",
+							"    pm.expect(responseData).to.have.property('title');",
+							"    pm.expect(responseData).to.have.property('author');",
+							"    pm.expect(responseData).to.have.property('genre');",
+							"    pm.expect(responseData).to.have.property('checkedOut');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books/:id?genre=fiction&checkedOut=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books",
+						":id"
+					],
+					"query": [
+						{
+							"key": "genre",
+							"value": "fiction"
+						},
+						{
+							"key": "checkedOut",
+							"value": "false"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "29cd820f-82f9-4b45-a7f4-0924111b5b89"
+						}
+					]
+				},
+				"description": "### Get Book by ID\n\nThis endpoint retrieves a specific book by its ID, with optional query parameters to filter by genre and checked-out status.\n\n#### Request\n\n- Method: `GET`\n    \n- Endpoint: `{{baseUrl}}/books/:id?genre=fiction&checkedOut=false`\n    \n- Query Parameters:\n    \n    - `genre` (optional, string): Filter books by genre.\n        \n    - `checkedOut` (optional, boolean): Filter books by checked-out status.\n        \n\n#### Response\n\nThe response will be a JSON object representing the book with the specified ID. The JSON schema for the response is as follows:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"title\": {\n      \"type\": \"string\"\n    },\n    \"author\": {\n      \"type\": \"string\"\n    },\n    \"genre\": {\n      \"type\": \"string\"\n    },\n    \"checkedOut\": {\n      \"type\": \"boolean\"\n    }\n  },\n  \"required\": [\"id\", \"title\", \"author\", \"genre\", \"checkedOut\"]\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "get book by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response schema validation is successful\", function () {",
+							"  var schema = {",
+							"    type: \"object\",",
+							"    properties: {",
+							"      id: { type: \"number\" },",
+							"      title: { type: \"string\" },",
+							"      author: { type: \"string\" },",
+							"      publishedDate: { type: \"string\", format: \"date\" },",
+							"      pageCount: { type: \"number\" },",
+							"      language: { type: \"string\" },",
+							"      category: { type: \"string\" },",
+							"      ISBN: { type: \"string\" },",
+							"      description: { type: \"string\" },",
+							"    },",
+							"    required: [\"id\", \"title\", \"author\", \"publishedDate\", \"pageCount\", \"language\", \"category\", \"ISBN\", \"description\"],",
+							"  };",
+							"",
+							"  var response = pm.response.json();",
+							"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "29cd820f-82f9-4b45-a7f4-0924111b5b89"
+						}
+					]
+				},
+				"description": "# Get Book Details\n\nThis endpoint retrieves the details of a specific book identified by its unique ID.\n\n## Request\n\n### Request Parameters\n\n- `id` (path parameter) : The unique identifier of the book.\n    \n\n## Response\n\nThe response will be a JSON object with the following properties:\n\n- `id` : The unique identifier of the book.\n    \n- `title` : The title of the book.\n    \n- `author` : The author of the book.\n    \n- `genre` : The genre of the book.\n    \n- `publishedDate` : The published date of the book.\n    \n\nExample:\n\n``` json\n{\n    \"id\": \"123\",\n    \"title\": \"Sample Book Title\",\n    \"author\": \"Sample Author\",\n    \"genre\": \"Sample Genre\",\n    \"publishedDate\": \"2022-01-01\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "add a book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Extract the id of the newly added book",
+							"pm.environment.set(\"newBookId\", pm.response.json().id);",
+							"",
+							"// Test the id value is not empty",
+							"pm.test(\"ID is not empty\", function () {",
+							"    pm.expect(pm.environment.get(\"newBookId\")).to.not.be.empty;",
+							"});",
+							"",
+							"// Test the yearPublished is a number",
+							"pm.test(\"Year Published is a number\", function () {",
+							"    var yearPublished = pm.response.json().yearPublished;",
+							"    pm.expect(yearPublished).to.be.a('number');",
+							"});",
+							"",
+							"// Test the createdAt value is not empty",
+							"pm.test(\"CreatedAt is not empty\", function () {",
+							"    var createdAt = pm.response.json().createdAt;",
+							"    pm.expect(createdAt).to.not.be.empty;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"abc123\",\n  \"title\": \"The Great Book\",\n  \"author\": \"John Doe\",\n  \"genre\": \"fiction\",\n  \"yearPublished\": 2023\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/books",
+				"description": "### POST /books\n\nThis endpoint is used to create a new book entry.\n\n#### Request Body\n\n- `id` (string, required): The unique identifier for the book.\n    \n- `title` (string, required): The title of the book.\n    \n- `author` (string, required): The author of the book.\n    \n- `genre` (string, required): The genre of the book.\n    \n- `yearPublished` (integer, required): The year the book was published.\n    \n\n#### Response\n\nThe response is in JSON format and includes the following fields:\n\n- `id` (string): The unique identifier for the book.\n    \n- `title` (string): The title of the book.\n    \n- `author` (string): The author of the book.\n    \n- `genre` (string): The genre of the book.\n    \n- `yearPublished` (integer): The year the book was published.\n    \n- `checkedOut` (boolean): Indicates if the book is currently checked out.\n    \n- `isPermanentCollection` (boolean): Indicates if the book is part of the permanent collection.\n    \n- `createdAt` (string): The timestamp when the book entry was created.\n    \n\n#### JSON Schema\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": { \"type\": \"string\" },\n    \"title\": { \"type\": \"string\" },\n    \"author\": { \"type\": \"string\" },\n    \"genre\": { \"type\": \"string\" },\n    \"yearPublished\": { \"type\": \"integer\" },\n    \"checkedOut\": { \"type\": \"boolean\" },\n    \"isPermanentCollection\": { \"type\": \"boolean\" },\n    \"createdAt\": { \"type\": \"string\" }\n  }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "checkout a book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n  \"checkedOut\": true \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/books/{{newBookId}}",
+				"description": "### Update Book Status\n\nThis endpoint is used to update the status of a specific book.\n\n#### Request\n\n- Method: PATCH\n    \n- Endpoint: `{{baseUrl}}/books/:id`\n    \n- Body:\n    \n    - `checkedOut` (boolean): Indicates whether the book is checked out or not.\n        \n\n#### Response\n\nThe response of this request is a JSON schema representing the updated book object."
+			},
+			"response": []
+		},
+		{
+			"name": "delete a book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test to check the response for a specific condition",
+							"pm.test(\"Response status code is 204 for successful deletion\", function () {",
+							"  pm.response.to.have.status(204);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n  \"checkedOut\": true \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/books/{{newBookId}}",
+				"description": "### Delete Book by ID\n\nThis endpoint is used to delete a specific book by its ID.\n\n#### Request\n\n- Method: `DELETE`\n    \n- URL: `{{baseUrl}}/books/:id`\n    \n- Body:\n    \n    - `checkedOut` (boolean, required): Indicates whether the book is checked out or not.\n        \n\n#### Response\n\nThe response for this request is a JSON schema. The schema will define the structure of the response data returned upon successful deletion of the book."
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"key": "api-key",
+			"value": "{{apiKey}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "favoriteActor",
+			"value": ""
+		},
+		{
+			"key": "bookId",
+			"value": ""
+		}
+	]
+}
