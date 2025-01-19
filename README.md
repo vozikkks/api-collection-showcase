@@ -26,7 +26,8 @@ This collection serves as:
 ---
 
 ## **Repository Structure**
-- **`Postman_Library_API_Collection.postman_collection.json`**: Main collection with all endpoints and tests.
-- **`Example_Environment.postman_environment.json`**: Example environment file with placeholder values.
-- **`README.md`**: Documentation for the collection and its purpose.
+- [Postman_Library_API_Collection.postman_collection.json:](https://github.com/vozikkks/api-collection-showcase/blob/main/Postman%20Library%20API%20collection.postman_collection.json)Main collection with all endpoints and tests.
+- [README.md:](https://github.com/vozikkks/api-collection-showcase/blob/main/README.md) Documentation for the collection and its purpose.
+- [Example_Environment.postman_environment.json:](https://github.com/vozikkks/api-collection-showcase/blob/main/booksCollection.postman_environment.json) Example environment file with placeholder values.
+
 //i think i need screenshots
