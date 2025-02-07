@@ -1,7 +1,7 @@
 # **Postman Library API Collection**
 
 ## **Overview**
-This repository contains a Postman collection created based on the official Postman API Fundamentals course. It has been further improved and customized to serve as a showcase of API testing skills and best practices.
+This repository contains a Postman collection to serve as a showcase of API testing skills and best practices.
 
 The collection demonstrates:
 - Proper use of Postman features like dynamic variables and environment management.
